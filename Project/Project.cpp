@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-
+using namespace std;
 
 bool isFinished = false;
 
@@ -22,24 +22,30 @@ bool isEmpty(int sudoku)
         return true;
 }
 
-void solver(int sudoku[9][9],int row, int collumn)
+void solver(int sudoku[9][9],int row, int collumn,int changedNumber,int checkedNumbers[9])
 {
     int checkedNumber = 0;
+    sudoku[row][collumn] = changedNumber;
     if (isFinished == true) return;
-    while(!isEmpty(sudoku[row][collumn]))
+    if (sudoku[row][collumn] == 0)
     {
-        if (collumn<9)
+        if (collumn==9)
         {
-            collumn++;
+            solver(sudoku, row + 1, 0,changedNumber,checkedNumbers);
         }
-        row++;
-        collumn = 0;
+        if (row == 9 && collumn == 9)
+            return;
+        solver(sudoku, row, collumn + 1,changedNumber, checkedNumbers);
     }
     for (int i = 0; i < 9; i++)
     {
-        checkedNumber = i;
-        if (isEmpty(sudoku[row][collumn]) && isCanditate(row, collumn,checkedNumber, sudoku));
-        sudoku[row][collumn] = checkedNumber;
+        if (i != checkedNumbers[i])
+        {
+            checkedNumber = i;
+            checkedNumbers[i] = i;
+            solver(sudoku, row, collumn, checkedNumber, checkedNumbers);
+        }    
+
     }
 
 }
@@ -62,8 +68,13 @@ int main()
     for(int i=0;i<9;i++)
         for (int j = 0; j < 9; j++)
         {
-            solver(sudoku, i, j);
+            solver(sudoku, i, j,0,0);
         }
-
+    for (int i = 0; i < 9; i++)
+        for (int j = 0; j < 9; j++)
+        {
+            cout << sudoku[i][j];
+            if (j == 9) cout << endl;   
+        }
 }
 

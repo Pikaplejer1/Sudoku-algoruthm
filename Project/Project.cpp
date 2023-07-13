@@ -7,21 +7,7 @@ using namespace std;
 
 bool isFinished = false;
 
-bool isCanditate(int row, int collumn, int checkedNumber, int sudoku[9][9])
-{
-    for (int i = 0; i < 9; i++)
-        if (sudoku[row][i] == checkedNumber) return false;
-    for (int i = 0; i < 9; i++)
-                if (sudoku[i][row] == checkedNumber) return false;
-    return true;
-}
-
-bool isEmpty(int sudoku)
-{
-    if (sudoku == 0);
-        return true;
-}
-
+/*
 void solver(int sudoku[9][9],int row, int collumn,int changedNumber,int checkedNumbers[9])
 {
     int checkedNumber = 0;
@@ -49,6 +35,31 @@ void solver(int sudoku[9][9],int row, int collumn,int changedNumber,int checkedN
     }
 
 }
+*/
+
+bool stockSolver(int isStock[9][9],int currentRow, int currentCollumn)
+{
+    if (isStock[currentRow][currentCollumn] == 0)
+        return false;
+    else return true;
+}
+
+bool isCanditate(int sudoku[9][9], int currentRow, int currentCollumn, int numberCheck)
+{
+    for (int i = 0; i < 9; i++)
+    {
+        if (sudoku[currentRow][i] == numberCheck)
+        return false;
+
+    }
+}
+
+void solver(int sudoku[9][9], int currentRow, int currentCollumn, int checkedNumbers[9], int numberCheck, bool isStock[9][9])
+{
+
+        
+}
+
 
 int main()
 {
@@ -65,10 +76,12 @@ int main()
         {0,0,9,1,8,2,0,0,3},
         {0,0,0,0,6,0,1,0,0}
     };
+
+    
     for(int i=0;i<9;i++)
         for (int j = 0; j < 9; j++)
         {
-            solver(sudoku, i, j,0,0);
+            //solver(sudoku, i, j,0,0);
         }
     for (int i = 0; i < 9; i++)
         for (int j = 0; j < 9; j++)

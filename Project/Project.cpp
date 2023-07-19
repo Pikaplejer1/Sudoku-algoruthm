@@ -37,8 +37,9 @@ void solver(int sudoku[9][9],int row, int collumn,int changedNumber,int checkedN
 }
 */
 
-bool stockSolver(int isStock[9][9],int currentRow, int currentCollumn)
+bool stockSolver(int currentRow, int currentCollumn)
 {
+    int isStock[9][9] = {};
     if (isStock[currentRow][currentCollumn] == 0)
         return false;
     else return true;
@@ -49,15 +50,62 @@ bool isCanditate(int sudoku[9][9], int currentRow, int currentCollumn, int numbe
     for (int i = 0; i < 9; i++)
     {
         if (sudoku[currentRow][i] == numberCheck)
-        return false;
-
+            return false;
+        else if (sudoku[i][currentCollumn] == numberCheck)
+            return false;
+        else return true;
     }
 }
 
-void solver(int sudoku[9][9], int currentRow, int currentCollumn, int checkedNumbers[9], int numberCheck, bool isStock[9][9])
+bool solver(int sudoku[9][9], int currentRow, int currentCollumn, int checkedNumbers[9], int numberCheck, bool isStock[9][9])
 {
+    bool isFinished = false;
+    int checkedNumber = 0;
+    /*
+    if (sudoku[currentRow][currentCollumn] != 0)
+    {
+        if (currentCollumn == 8)
+        {
+            currentCollumn = 0;
+            currentRow++;
+        }
+        currentCollumn++;
+    }
+   
+    for (int i = 0; i < 9; i++)
+    {
+        if (isCanditate(sudoku, currentRow, currentCollumn, i))
+        {
+            checkedNumbers[i] = i;
+            checkedNumber = i;
+            sudoku[currentRow][currentCollumn] = i;
+            solver(sudoku, currentRow, currentCollumn, checkedNumbers, i, isStock);
+        }
+    }
+    */
+    
+    for (int i = 0; i < 9; i++)
+        for (int j = 0; j < 9; j++)
+        {
+            if (sudoku[currentRow][currentCollumn] == 0)
+            {
+                for (checkedNumber = 0; checkedNumber < 9; i++)
+                {
+                    if (isCanditate(sudoku, currentRow, currentCollumn, checkedNumber))
+                    {
+                        sudoku[currentRow][currentCollumn] = checkedNumber;
+                        if (isFinished)
+                            return true;
+                        else
+                            sudoku[i][j] = 0;
+                    }
+                }
+            }
+            return false;
 
-        
+        }
+    return true;
+   
 }
 
 
@@ -86,8 +134,14 @@ int main()
     for (int i = 0; i < 9; i++)
         for (int j = 0; j < 9; j++)
         {
-            cout << sudoku[i][j];
-            if (j == 9) cout << endl;   
+            stockSolver(i, j);
         }
+    for (int i = 0; i < 9; i++)
+        for (int j = 0; j < 9; j++)
+        {
+            cout << sudoku[i][j]<< " ";
+            if (j == 8) cout << endl;   
+        }
+    
 }
 
